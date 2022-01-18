@@ -59,6 +59,8 @@ export const compressWithPVRTexTool = (args: ICLIArgs): Promise<any> => {
     throw new Error('Unknown compression format');
   }
 
+  args.compression = args.compression + ',UBN,sRGB';
+
   const flagMapping = [
     '-i',
     args.input,
