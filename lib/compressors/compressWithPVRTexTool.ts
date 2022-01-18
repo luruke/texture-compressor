@@ -59,7 +59,9 @@ export const compressWithPVRTexTool = (args: ICLIArgs): Promise<any> => {
     throw new Error('Unknown compression format');
   }
 
-  args.compression = args.compression + ',UBN,sRGB';
+  if (args.type !== PVRTC) {
+    args.compression = args.compression + ',UBN,sRGB';
+  }
 
   const flagMapping = [
     '-i',
@@ -89,5 +91,6 @@ export const compressWithPVRTexTool = (args: ICLIArgs): Promise<any> => {
     flagMapping.push('-flip', 'y');
   }
 
-  return spawnProcess(args, flagMapping, 'PVRTexToolCLI');
+  let prefix = args.type === PVRTC ? 'old/' : '';
+  return spawnProcess(args, flagMapping, prefix + '/PVRTexToolCLI');
 };

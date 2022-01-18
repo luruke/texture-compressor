@@ -26,6 +26,8 @@ export const spawnProcess = (
 
   return new Promise(
     (resolve, reject): void => {
+      args.verbose = true;
+
       if (args.verbose) {
         console.log(`Using flags: ${combinedFlags}`);
       }
