@@ -19,7 +19,7 @@ export const spawnProcess = (
   args: ICLIArgs,
   flagMapping: string[],
   binaryName: string
-): Promise<any> => {
+): Promise<void> => {
   const toolPath = join(getBinaryDirectory(), binaryName);
   const toolFlags = args.flags ? splitFlagAndValue(createFlagsForTool(args.flags)) : [];
   const combinedFlags = [...flagMapping, ...toolFlags];
@@ -31,9 +31,9 @@ export const spawnProcess = (
       }
 
       const child = spawn(toolPath, combinedFlags, {
-        // @ts-ignore
         env: {
-          PATH: getBinaryDirectory() || process.env,
+          PATH: getBinaryDirectory() || process.env.PATH,
+          LD_PRELOAD_PATH: process.env.LD_PRELOAD_PATH,
         },
       });
 
